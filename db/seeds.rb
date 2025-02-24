@@ -5,23 +5,16 @@ Post.destroy_all
 # Create 2 users
 users = []
 
+(1..5).to_a.each do |index|
   user = User.create!(
     first_name: Faker::Name.first_name,
     last_name: Faker::Name.last_name,
     username: Faker::Internet.username,
-    email: 'user@example.com',
-    password: 'password' # Adjust as needed
+    email: "user#{index}@example.com",
+    password: 'password'
   )
   users << user
-
-  user = User.create!(
-    first_name: Faker::Name.first_name,
-    last_name: Faker::Name.last_name,
-    username: Faker::Internet.username,
-    email: 'user2@example.com',
-    password: 'password' # Adjust as needed
-  )
-  users << user
+end
 
 
 # Create 10 posts for each user
@@ -30,7 +23,7 @@ users.each do |user|
     Post.create!(
       user_id: user.id,
       title: Faker::Book.title,
-      content: Faker::Lorem.paragraph(sentence_count: 10)
+      content: Faker::Lorem.paragraph(sentence_count: (5..20).to_a.sample)
     )
   end
 end
