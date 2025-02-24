@@ -1,6 +1,8 @@
 class Post < ApplicationRecord
   belongs_to :user
 
+  validates :content, presence: true
+
   def abbreviated_time_ago_in_words
     time_diff = Time.now - created_at
   

@@ -20,10 +20,15 @@ end
 # Create 10 posts for each user
 users.each do |user|
   10.times do
-    Post.create!(
+    start_time = 24.hours.ago
+    end_time = 30.minutes.ago
+    created_at_time = Time.at(rand(start_time.to_f..end_time.to_f))
+
+    post = Post.create!(
       user_id: user.id,
       title: Faker::Book.title,
-      content: Faker::Lorem.paragraph(sentence_count: (5..20).to_a.sample)
+      content: Faker::Lorem.paragraph(sentence_count: (5..20).to_a.sample),
+      created_at: created_at_time 
     )
   end
 end
