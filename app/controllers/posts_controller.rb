@@ -26,10 +26,10 @@ class PostsController < ApplicationController
     @post = Post.new(post_params)
     @post.user = current_user
 
+
     respond_to do |format|
       if @post.save
-        format.html { redirect_to posts_path, notice: "Post was successfully created." }
-        format.json { render :show, status: :created, location: @post }
+        format.turbo_stream
       else
         format.html { render :index, status: :unprocessable_entity }
         format.json { render json: @post.errors, status: :unprocessable_entity }

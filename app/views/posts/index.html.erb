@@ -1,5 +1,10 @@
 <% content_for :title, "Posts" %>
-<%= render 'form', post: Post.new %>
+<%= turbo_frame_tag current_user, :new_post do %>
+  <%= render 'form', post: Post.new %>
+<% end %>
+
 <ul role="list" class="divide-y divide-gray-100 overflow-hidden bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl">
-  <%= render @posts %>
+  <%= turbo_frame_tag current_user, :posts do %>
+    <%= render @posts %>
+  <% end %>
 </ul>

@@ -3,6 +3,10 @@ class Post < ApplicationRecord
 
   validates :content, presence: true
 
+  has_many :likes, dependent: :destroy
+  has_many :liked_by_users, through: :likes, source: :user
+
+
   def abbreviated_time_ago_in_words
     time_diff = Time.now - created_at
   
