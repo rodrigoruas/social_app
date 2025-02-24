@@ -15,9 +15,7 @@
           <%= post.content %>
         </p>
         <div class="flex justify-end">
-          <%= turbo_frame_tag :likes, post.id do %>
             <%= render 'likes/like', post: post %>
-          <% end %>
         </div>
       </div>
     </div>
