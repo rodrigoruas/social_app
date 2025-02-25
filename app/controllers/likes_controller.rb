@@ -4,8 +4,9 @@ class LikesController < ApplicationController
     @like = current_user.likes.build(like_params)
     @post = @like.post
     if @like.save
-      # render partial: "likes/like", locals: { post: @like.post }
-      render turbo_stream: turbo_stream.replace(dom_id(@post, :likes), partial: "likes/like", locals: { post: @post })
+      # write down an explanationn for this..
+      render partial: "likes/like", locals: { post: @like.post, like: @like }
+      # render turbo_stream: turbo_stream.replace(dom_id(@post, :likes), partial: "likes/like", locals: { post: @post, user: current_user })
     else
     end
   end
@@ -14,8 +15,8 @@ class LikesController < ApplicationController
     @like = current_user.likes.find(params[:id])
     @post = @like.post
     if @like.destroy
-      # render partial: "likes/like", locals: { post: @like.post }
-      render turbo_stream: turbo_stream.replace(dom_id(@post, :likes), partial: "likes/like", locals: { post: @post })
+      render partial: "likes/like", locals: { post: @post, like: Like.new }
+      # render turbo_stream: turbo_stream.replace(dom_id(@post, :likes), partial: "likes/like", locals: { post: @post, user: current_user })
     end
   end
 

@@ -1,7 +1,8 @@
 <% content_for :title, "Posts" %>
-<%= turbo_frame_tag current_user, :new_post do %>
-  <%= render 'form', post: Post.new %>
-<% end %>
+<%= render 'form', post: Post.new %>
+<%= turbo_stream_from "posts_feed" %>
+
+<p>Hello, <%= current_user.email %></p>
 
 <ul role="list" class="divide-y divide-gray-100 overflow-hidden bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl">
   <%= turbo_frame_tag current_user, :posts do %>

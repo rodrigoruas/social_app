@@ -25,16 +25,25 @@ class PostsController < ApplicationController
   def create
     @post = Post.new(post_params)
     @post.user = current_user
-
-
-    respond_to do |format|
-      if @post.save
-        format.turbo_stream
-      else
-        format.html { render :index, status: :unprocessable_entity }
-        format.json { render json: @post.errors, status: :unprocessable_entity }
-      end
+    if params[:send_option] == "later"
+      SchedulePostJob.set(wait: 3.seconds).perform_later(@post.user.id, @post.content)
+    else
+      @post.save
+      # render json: {}, status: :no_content
     end
+    respond_to do |format|
+      format.turbo_stream
+    end
+
+    # respond_to do |format|
+    #   if @post.save
+    #     # format.turbo_stream
+    #     render json: {}, status: :no_content
+    #   else
+    #     format.html { render :index, status: :unprocessable_entity }
+    #     format.json { render json: @post.errors, status: :unprocessable_entity }
+    #   end
+    # end
   end
 
   # PATCH/PUT /posts/1 or /posts/1.json

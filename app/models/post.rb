@@ -6,10 +6,21 @@ class Post < ApplicationRecord
   has_many :likes, dependent: :destroy
   has_many :liked_by_users, through: :likes, source: :user
 
+  after_commit :broadcast_post
+
+  def broadcast_post
+    broadcast_prepend_to(
+      "posts_feed",
+      target: [ user, :posts ],
+      partial: "posts/post",
+      locals: { post: self }
+    )
+  end
+
 
   def abbreviated_time_ago_in_words
     time_diff = Time.now - created_at
-  
+
     case time_diff
     when 0..59
       "#{time_diff.to_i}s" # Seconds
@@ -27,5 +38,4 @@ class Post < ApplicationRecord
       "#{(time_diff / 31_557_600).to_i}y" # Years
     end
   end
-  
 end
