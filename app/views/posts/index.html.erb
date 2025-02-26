@@ -6,6 +6,10 @@
 
 <ul role="list" class="divide-y divide-gray-100 overflow-hidden bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl">
   <%= turbo_frame_tag current_user, :posts do %>
-    <%= render @posts %>
+    <%# #collection caching -> when rails receives the 1st collection page, it will write the contents of these partials HTML
+    <%# to a cache stamped with a hash, this hash being computed based on the content of each partial%> 
+    <%# how if the partial HTML file changes, like updating the record, the digest will change and the existing cache will expire%>
+    <%= render partial: "posts/post", collection: @posts, cached: true %> 
+    <%#= render @posts %>
   <% end %>
 </ul>
