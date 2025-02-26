@@ -1,0 +1,5 @@
+<%= turbo_frame_tag current_user, :messages do %>
+  <div class="w-full p-4 flex flex-col gap-8">
+    <%= render messages, current_user: current_user  %>
+  </div>
+<% end %>

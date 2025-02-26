@@ -1,0 +1,13 @@
+<div class="bg-white p-6 border border-gray-200 rounded-md shadow">
+  <h1 class="text-xl font-bold text-gray-800 mb-4">Your Conversations</h1>
+
+  <%= form_with url: conversations_path, method: :post, class: "mb-4 flex gap-2" do |f| %>
+    <%= f.label :user_id, "Start conversation with:", class: "text-sm font-medium text-gray-700" %>
+    <%= f.collection_select :user_id, User.where.not(id: current_user.id), :id, :email, {}, class: "border rounded p-2" %>
+    <%= f.submit "Start", class: "bg-indigo-500 text-white px-4 py-2 rounded-md shadow hover:bg-indigo-600" %>
+  <% end %>
+
+  <ul class="space-y-3">
+    <%= render @conversations %>
+  </ul>
+</div>
