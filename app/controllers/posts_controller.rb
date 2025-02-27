@@ -29,7 +29,7 @@ class PostsController < ApplicationController
 
     respond_to do |format|
       if @post.save
-        format.turbo_stream
+        format.html { redirect_to posts_path }
       else
         format.html { render :index, status: :unprocessable_entity }
         format.json { render json: @post.errors, status: :unprocessable_entity }
