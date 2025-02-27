@@ -1,0 +1,17 @@
+<% sent = message.from_user == current_user %>
+<% flex_location = sent ? "justify-end" : "justify-start" %>
+<% border_radius = sent ? "rounded-bl-xl rounded-t-xl bg-indigo-500 text-white" : "rounded-br-xl rounded-t-xl bg-gray-100 text-gray-900" %>
+
+<div class="flex <%= flex_location %>">
+  <div class="flex flex-col">
+    <span class="mx-2 text-gray-400 text-xs <%= flex_location %>">
+      <%= message.created_at.strftime("%b %d, %H:%M") %>
+    </span>
+    <div class="flex gap-2 mb-3">
+      <img class="size-12 flex-none rounded-full bg-gray-50" src="https://robohash.org/<%=message.from_user.username%>.png" alt="">
+      <div class="text-xs p-3 max-w-xs rounded-t-xl shadow-md text-right <%= border_radius %>">
+        <%= message.content %>
+      </div>
+    </div>
+  </div>
+</div>
