@@ -1,17 +1,21 @@
-# README
+## Rails 8 Live Coding Topics
 
-1. Add turbo_streams to post and 
-2. Remove turbo_stream from the controller and do it in a simple way. -> Lack explanation
-3. Setup solid cable and broadcast a post 
+### Rails 8 Demo
 
+### Hotwire Basics
+A framework for building fast, real-time web apps with minimal JavaScript using Turbo and Stimulus.
 
-turbo frame cons:
+### Solid Queue
+Rails 8's built-in background job processor for handling asynchronous tasks efficiently.
 
-- can update just one frame at the time
-- we can only update not prepend, append etc
+### Solid Cache
+A new caching system in Rails 8 designed for improved data storage and retrieval performance.
 
+### Solid Cable
+A WebSocket framework in Rails 8 that replaces ActionCable, offering better real-time performance.
 
-turbo stream
+### Add Turbo Frames to Make Our App Reactive
+Turbo Frames allow partial page updates without full reloads, making web applications more interactive.
 
-- write more code
-
+### Infinite Scroll with Hotwire
+Uses Turbo Streams and Stimulus to dynamically load more content as users scroll down.
