@@ -15,7 +15,7 @@
           <%= post.content %>
         </p>
         <div class="flex justify-end">
-            <%= render 'likes/like', post: post %>
+           <%= render 'likes/like', post: post, like: Like.find_by(post: post, user: post.user) %>
         </div>
       </div>
     </div>
