@@ -1,15 +1,29 @@
-<% content_for :title, "Posts" %>
-<%= render 'form', post: Post.new %>
-<%= turbo_stream_from "posts_feed" %>
+<%= turbo_frame_tag :main_wrapper do %>
+  <% content_for :title, "Posts" %>
 
-<p>Hello, <%= current_user.email %></p>
+  <%#= render 'form', post: Post.new %>
 
-<ul role="list" class="divide-y divide-gray-100 overflow-hidden bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl">
-  <%= turbo_frame_tag current_user, :posts do %>
-    <%# #collection caching -> when rails receives the 1st collection page, it will write the contents of these partials HTML
-    <%# to a cache stamped with a hash, this hash being computed based on the content of each partial%> 
-    <%# how if the partial HTML file changes, like updating the record, the digest will change and the existing cache will expire%>
-    <%= render partial: "posts/post", collection: @posts, cached: true %> 
-    <%#= render @posts %>
+  <%= link_to "New Post", new_post_path, data: { turbo_frame: 'new_frame' }, class: 'rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white inline-block font-medium' %>
+
+  <%= turbo_frame_tag :new_frame do %>
   <% end %>
-</ul>
+
+
+  <%= turbo_stream_from "posts_feed" %>
+
+  <p>Hello, <%= current_user.email %></p>
+
+  <ul role="list" class="divide-y divide-gray-100 overflow-hidden bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl">
+    <%= turbo_frame_tag current_user, :posts do %>
+      <%# #collection caching -> when rails receives the 1st collection page, it will write the contents of these partials HTML
+      <%# to a cache stamped with a hash, this hash being computed based on the content of each partial%> 
+      <%# how if the partial HTML file changes, like updating the record, the digest will change and the existing cache will expire%>
+      <%= render partial: "posts/post", collection: @posts, cached: true %> 
+      <%#= render @posts %>
+    <% end %>
+  </ul>
+    <p><%= @pagy.next %></p>
+    <% if @pagy.next  %>
+      <%= turbo_frame_tag :next_page, src: posts_path(page: @pagy.next, format: :turbo_stream), loading: :lazy %>
+    <% end %>
+<% end %>

@@ -25,7 +25,10 @@
   <body>
     <%= render 'shared/navbar' %>
     <main class="container mx-auto mt-10 px-5 sm:max-w-xl">
-      <%= yield %>
+      <%= turbo_frame_tag :main_wrapper do %>
+        <%= yield %>
+      <% end %>
+      <%= turbo_frame_tag :modal %>
     </main>
   </body>
 </html>
